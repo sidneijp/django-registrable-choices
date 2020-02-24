@@ -1,12 +1,12 @@
 from django.db import models
 import pytest
 
-from . import choices
+from registrable.choices import DynamicLazyChoices, ModelLazyChoices
 
 
 @pytest.mark.unit
 def test_dynamiclazychoices_register():
-    choices = choices.DynamicLazyChoices()
+    choices = DynamicLazyChoices()
     a_group_name = 'A Choice Group Name'
     a_choice_value = 'a_choice_value'
     a_choice_label = 'A Choice Label to Display'
@@ -24,7 +24,7 @@ def test_dynamiclazychoices_register():
 
 @pytest.mark.unit
 def test_dynamiclazychoices_is_group_choice():
-    choices = choices.DynamicLazyChoices()
+    choices = DynamicLazyChoices()
     a_group_name = 'A Choice Group Name'
     a_choice_value = 'a_choice_value'
     a_choice_label = 'A Choice Label to Display'
@@ -43,7 +43,7 @@ def test_dynamiclazychoices_is_group_choice():
 
 @pytest.mark.unit
 def test_dynamiclazychoices_get_group():
-    choices = choices.DynamicLazyChoices()
+    choices = DynamicLazyChoices()
     a_group_name = 'A Choice Group Name'
     a_choice_value = 'a_choice_value'
     a_choice_label = 'A Choice Label to Display'
@@ -76,7 +76,7 @@ def test_dynamiclazychoices_get_group():
 
 @pytest.mark.unit
 def test_dynamiclazychoices_get_group_without_choices():
-    choices = choices.DynamicLazyChoices()
+    choices = DynamicLazyChoices()
     a_group_name = 'whathever'
     expected = None
 
@@ -88,7 +88,7 @@ def test_dynamiclazychoices_get_group_without_choices():
 
 @pytest.mark.unit
 def test_dynamiclazychoices_get_group_with_only_ungrouped_choices():
-    choices = choices.DynamicLazyChoices()
+    choices = DynamicLazyChoices()
     a_group_name = 'whathever'
     a_choice_value = 'a_choice_value'
     a_choice_label = 'A Choice Label to Display'
@@ -104,7 +104,7 @@ def test_dynamiclazychoices_get_group_with_only_ungrouped_choices():
 
 @pytest.mark.unit
 def test_dynamiclazychoices_get_group_for_invalid_group_name():
-    choices = choices.DynamicLazyChoices()
+    choices = DynamicLazyChoices()
     an_invalid_group_name = 'whathever'
     a_group_name = 'A Choice Group Name'
     a_choice_value = 'a_choice_value'
@@ -125,7 +125,7 @@ def test_dynamiclazychoices_get_group_for_invalid_group_name():
 
 @pytest.mark.unit
 def test_dynamiclazychoices_equals_should_be_false_when_a_non_iterable():
-    choices = choices.DynamicLazyChoices()
+    choices = DynamicLazyChoices()
     a_non_iterable_object = 0
     expected = False
 
@@ -144,7 +144,7 @@ def test_dynamiclazychoices_raise_check_error():
 
 @pytest.mark.unit
 def test_modellazychoices_functor_decorator_register():
-    model_choices = choices.ModelLazyChoices()
+    model_choices = ModelLazyChoices()
     expected = (
         ('ModelA', 'Model A'),
         ('mB', 'M - B'),
@@ -202,7 +202,7 @@ def test_modellazychoices_functor_decorator_register():
 
 @pytest.mark.unit
 def test_modellazychoices_register():
-    model_choices = choices.ModelLazyChoices()
+    model_choices = ModelLazyChoices()
     expected = (
         ('ModelA', 'Model A'),
         ('mB', 'M - B'),
@@ -265,7 +265,8 @@ def test_modellazychoices_register():
 
 @pytest.mark.unit
 def test_modellazychoices_get_model_for_valid_choice_value():
-    model_choices = choices.ModelLazyChoices()
+    model_choices = ModelLazyChoices()
+
     class ModelA(models.Model):
         _choice_value = 'a'
         _choice_label = 'A'
@@ -284,7 +285,8 @@ def test_modellazychoices_get_model_for_valid_choice_value():
 
 @pytest.mark.unit
 def test_modellazychoices_get_model_for_invalid_choice_value():
-    model_choices = choices.ModelLazyChoices()
+    model_choices = ModelLazyChoices()
+
     class ModelA(models.Model):
         _choice_value = 'a'
         _choice_label = 'A'
